@@ -10,10 +10,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.2.2 # 👈 बिल्कुल सटीक और नया सब-वर्जन
 
       - name: Setup Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v5.4.0 # 👈 बिल्कुल सटीक और नया सब-वर्जन
         with:
           python-version: '3.10'
 
