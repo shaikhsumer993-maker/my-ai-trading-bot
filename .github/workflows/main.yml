@@ -2,19 +2,18 @@ name: Daily AI Trading Bot Run
 
 on:
   schedule:
-    # यह टाइमिंग हर सोमवार से शुक्रवार रात 8:30 PM (भारतीय समयानुसार) बोट को चलाएगी
     - cron: '30 15 * * 1-5'
-  workflow_dispatch: # इससे आप जब चाहें खुद भी बटन दबाकर रन कर सकते हैं
+  workflow_dispatch:
 
 jobs:
   run-bot:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v4 # 👈 v3 की जगह v4 किया (यह Node 24 को सपोर्ट करता है)
+        uses: actions/checkout@v4
 
       - name: Setup Python
-        uses: actions/setup-python@v5 # 👈 v4 की जगह v5 किया (यह Node 24 को सपोर्ट करता है)
+        uses: actions/setup-python@v5
         with:
           python-version: '3.10'
 
@@ -24,10 +23,10 @@ jobs:
 
       - name: Run Multi-Agent Bot
         env:
-          GEMINI_API_KEY: ${{AQ.Ab8RN6L9GkVnWvmu673BLtU7-_ObNxMwJMaP7-qh-ZRh0MxFig}}
-          TELEGRAM_TOKEN: ${{8920263056:AAH1R04B3WbsA4s9pssewE-kAvok0Ru6e90}}
-          TELEGRAM_CHAT_ID: ${{1002663281}}
-          ALPACA_KEY: ${{PKTZZG7SCWXCTLWCSP6Z3RISKA}}
-          ALPACA_SECRET: ${{ExbAjYPtVtqo3m2KDvXSnyWGdbeWn}}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          ALPACA_KEY: ${{ secrets.ALPACA_KEY }}
+          ALPACA_SECRET: ${{ secrets.ALPACA_SECRET }}
         run: python trading_bot.py
         
