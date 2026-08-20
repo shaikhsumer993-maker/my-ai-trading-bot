@@ -1,0 +1,29 @@
+name: Daily AI Trading Bot Run
+
+on:
+  schedule:
+    # यह टाइमिंग हर सोमवार से शुक्रवार रात 8:30 PM (भारतीय समयानुसार) बोट को चलाएगी
+    - cron: '30 15 * * 1-5'
+  workflow_dispatch: # इससे आप जब चाहें खुद भी बटन दबाकर रन कर सकते हैं
+
+jobs:
+  run-bot:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install Dependencies
+        run: |
+          pip install google-generativeai pandas yfinance requests
+
+      - name: Run Multi-Agent Bot
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: python trading_bot.py
+        
