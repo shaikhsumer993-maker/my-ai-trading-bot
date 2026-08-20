@@ -24,11 +24,11 @@ jobs:
 
       - name: Run Multi-Agent Bot
         env:
-          GEMINI_API_KEY: ${{ AQ.Ab8RN6KE5Ys5HNbGVA_SLKNmRmLLsNBK4WWO3X80OJvi3cJCaQ }}
-          TELEGRAM_TOKEN: ${{ 8920263056: AAH1R04B3WbsA4s9pssewE-
-kAvok0Ru6e90 }}
-          TELEGRAM_CHAT_ID: ${{ 1002663281 }}
-          ALPACA_KEY: ${{ PKTZZG7SCWXCTLWCSP6Z3RISKA }}
-          ALPACA_SECRET: ${{ ExbAjYPtVtqo3m2KDvXSnyWGdbeWn }}
+          GEMINI_API_KEY: ${{AQ.Ab8RN6KE5Ys5HNbGVA_SLKNmRmLLsNBK4WWO3X80OJvi3cJCaQ}}
+          TELEGRAM_TOKEN: ${{8920263056: AAH1R04B3WbsA4s9pssewE-
+kAvok0Ru6e90}}
+          TELEGRAM_CHAT_ID: ${{1002663281}}
+          ALPACA_KEY: ${{PKTZZG7SCWXCTLWCSP6Z3RISKA}}
+          ALPACA_SECRET: ${{ExbAjYPtVtqo3m2KDvXSnyWGdbeWn}}
         run: python trading_bot.py
         
