@@ -24,7 +24,7 @@ jobs:
 
       - name: Run Multi-Agent Bot
         env:
-          GEMINI_API_KEY: ${{AQ.Ab8RN6KE5Ys5HNbGVA_SLKNmRmLLsNBK4WWO3X80OJvi3cJCaQ}}
+          GEMINI_API_KEY: ${{AQ.Ab8RN6L9GkVnWvmu673BLtU7-_ObNxMwJMaP7-qh-ZRh0MxFig}}
           TELEGRAM_TOKEN: ${{8920263056:AAH1R04B3WbsA4s9pssewE-kAvok0Ru6e90}}
           TELEGRAM_CHAT_ID: ${{1002663281}}
           ALPACA_KEY: ${{PKTZZG7SCWXCTLWCSP6Z3RISKA}}
