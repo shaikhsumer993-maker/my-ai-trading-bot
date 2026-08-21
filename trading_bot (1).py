@@ -35,8 +35,10 @@ def execute_paper_trade(ticker, action, qty=1):
     data = {"symbol": ticker, "qty": str(qty), "side": action.lower(), "type": "market", "time_in_force": "day"}
     res = requests.post(ALPACA_BASE_URL, json=data, headers=headers)
     
-    # FIXED: Explicitly checking for successful response codes 200 or 201
-    return "✅ Alpaca Order Placed!" if res.status_code in [200, 201] else f"❌ Alpaca Error: {res.text}"
+    if res.status_code in:
+        return "✅ Alpaca Order Placed!"
+    else:
+        return f"❌ Alpaca Error: {res.text}"
 
 def fetch_market_data(ticker):
     stock = yf.Ticker(ticker)
@@ -101,4 +103,3 @@ def run_trading_software():
 
 if __name__ == "__main__":
     run_trading_software()
-    
