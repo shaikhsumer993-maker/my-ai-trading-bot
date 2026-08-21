@@ -6,7 +6,7 @@ from google.genai import types
 import os
 import requests
 
-# 🔐 पर्यावरण वेरिएबल्स (GitHub Secrets)
+# 🔐 Environment Variables (GitHub Secrets)
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 TELEGRAM_TOKEN = os.getenv("TELEGRAM_TOKEN")
 TELEGRAM_CHAT_ID = os.getenv("TELEGRAM_CHAT_ID")
@@ -15,7 +15,7 @@ ALPACA_SECRET = os.getenv("ALPACA_SECRET")
 
 ALPACA_BASE_URL = "https://alpaca.markets"
 
-# 🚀 नए Google GenAI SDK क्लाइंट को इनिशियलाइज करना
+# 🚀 Initialize New Google GenAI SDK Client
 client = genai.Client(api_key=GEMINI_API_KEY)
 TICKER = "AAPL"
 
@@ -34,7 +34,8 @@ def execute_paper_trade(ticker, action, qty=1):
     }
     data = {"symbol": ticker, "qty": str(qty), "side": action.lower(), "type": "market", "time_in_force": "day"}
     res = requests.post(ALPACA_BASE_URL, json=data, headers=headers)
-    # 👇 यहाँ [200, 201] जोड़कर एरर को ठीक कर दिया गया है
+    
+    # FIXED: Explicitly checking for successful response codes 200 or 201
     return "✅ Alpaca Order Placed!" if res.status_code in [200, 201] else f"❌ Alpaca Error: {res.text}"
 
 def fetch_market_data(ticker):
@@ -51,7 +52,7 @@ def fetch_market_data(ticker):
         "SMA_20": round(latest['SMA_20'], 2) if not pd.isna(latest['SMA_20']) else 0
     }
 
-# 🧠 जेमिनी 2.0 एजेंट फंक्शन
+# 🧠 Gemini 2.0 Agent Function
 def call_gemini_agent(prompt):
     try:
         response = client.models.generate_content(
