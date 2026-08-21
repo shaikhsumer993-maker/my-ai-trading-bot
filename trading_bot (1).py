@@ -101,31 +101,3 @@ def run_trading_software():
 
 if __name__ == "__main__":
     run_trading_software()
-analyst_verdict = call_gemini_agent(analyst_prompt)
-    
-    risk_prompt = f"You are Risk Manager. Check this proposal: {json.dumps(analyst_verdict)} for {TICKER}. Current price: ${market_info['Current_Price']}. Output JSON with keys: 'approved' (true/false), 'risk_commentary'."
-    risk_verdict = call_gemini_agent(risk_prompt)
-    
-    # मेसेज ड्राफ्ट करना
-    signal = analyst_verdict.get('signal', 'HOLD')
-    approved = risk_verdict.get('approved', False)
-    rationale = analyst_verdict.get('analysis_rationale', 'No explanation')
-    
-    status_msg = f"📊 *AI Trading Bot Report ({TICKER})*\n\n"
-    status_msg += f"• Price: ${market_info['Current_Price']} ({market_info['Daily_Change_Percent']}%)\n"
-    status_msg += f"• AI Signal: *{signal}*\n"
-    status_msg += f"• Reason: {rationale}\n"
-    status_msg += f"• Risk Assessment: Approved = {approved}\n\n"
-
-    # आर्डर एग्जीक्यूशन और नोटिफिकेशन लॉजिक
-    if approved and signal != "HOLD":
-        trade_result = execute_paper_trade(TICKER, signal, qty=1)
-        status_msg += f"🚀 *Execution:* {trade_result}"
-    else:
-        status_msg += "❌ *Execution:* No Trade Action Taken."
-        
-    # टेलीग्राम पर अलर्ट भेजना
-    send_telegram_message(status_msg)
-
-if __name__ == "__main__":
-    run_trading_software()
