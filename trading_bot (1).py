@@ -1,4 +1,3 @@
-%%writefile trading_bot.py
 import json
 import pandas as pd
 import yfinance as yf
@@ -35,6 +34,7 @@ def execute_paper_trade(ticker, action, qty=1):
     }
     data = {"symbol": ticker, "qty": str(qty), "side": action.lower(), "type": "market", "time_in_force": "day"}
     res = requests.post(ALPACA_BASE_URL, json=data, headers=headers)
+    # 👇 यहाँ [200, 201] जोड़कर एरर को ठीक कर दिया गया है
     return "✅ Alpaca Order Placed!" if res.status_code in [200, 201] else f"❌ Alpaca Error: {res.text}"
 
 def fetch_market_data(ticker):
@@ -51,10 +51,9 @@ def fetch_market_data(ticker):
         "SMA_20": round(latest['SMA_20'], 2) if not pd.isna(latest['SMA_20']) else 0
     }
 
-# 🧠 नए SDK के साथ AI एजेंट्स फंक्शन
+# 🧠 जेमिनी 2.0 एजेंट फंक्शन
 def call_gemini_agent(prompt):
     try:
-        # जेमिनी 2.0 फ़्लैश मॉडल का उपयोग और सख़्त JSON संरचना लागू करना
         response = client.models.generate_content(
             model='gemini-2.0-flash',
             contents=prompt,
@@ -80,7 +79,7 @@ def run_trading_software():
     print(f"🤖 Analyst Verdict: {signal}")
     
     # Risk Manager [Paper]
-    risk_prompt = f"You are Risk Manager. Check: {json.dumps(analyst_verdict)} for {TICKER}. Output JSON with EXACT keys: 'approved' (must be true or false), 'risk_commentary'."
+    risk_prompt = f"You are Risk Manager. Check this proposal: {json.dumps(analyst_verdict)} for {TICKER}. Output JSON with EXACT keys: 'approved' (must be true or false), 'risk_commentary'."
     risk_verdict = call_gemini_agent(risk_prompt)
     approved = risk_verdict.get('approved', False)
     print(f"🛡️ Risk Verdict: Approved -> {approved}")
@@ -101,3 +100,4 @@ def run_trading_software():
 
 if __name__ == "__main__":
     run_trading_software()
+    
